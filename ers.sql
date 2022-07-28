@@ -73,4 +73,4 @@ INSERT INTO emp_reimbursement_sys.ers_reimbursement
 (reimb_amount, reimb_submitted, reimb_description, reimb_author, reimb_status_id, reimb_type_id)
 VALUES(1500.25, '7/21/2022', 'Relocation Expenses for Cognizant employment', 3, 1, 2);
 
-
+select * from ers_users where ers_users_id =1;

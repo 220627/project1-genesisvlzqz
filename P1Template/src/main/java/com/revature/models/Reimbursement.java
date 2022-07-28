@@ -1,13 +1,14 @@
 package com.revature.models;
 
 import java.io.FileInputStream;
+import java.sql.Timestamp;
 
 public class Reimbursement {
 	
 	private int reimb_id;
 	private float reimb_amount;
-	private String reimb_submitted;
-	private String reimb_resolved;
+	private Timestamp reimb_submitted;
+	private Timestamp reimb_resolved;
 	private String reimb_description;
 	private FileInputStream reimb_receipt;
 	private int reimb_author;
@@ -25,7 +26,7 @@ public class Reimbursement {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reimbursement(int reimb_id, float reimb_amount, String reimb_submitted, String reimb_resolved,
+	public Reimbursement(int reimb_id, float reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved,
 			String reimb_description, FileInputStream reimb_receipt, int reimb_author, int reimb_resolver,
 			int reimb_status_id, int reimb_type_id) {
 		super();
@@ -41,20 +42,20 @@ public class Reimbursement {
 		this.reimb_type_id = reimb_type_id;
 	}
 
-	public Reimbursement(int reimb_id, float reimb_amount, String reimb_submitted, String reimb_description,
-			int reimb_author, int reimb_resolver, int reimb_status_id, int reimb_type_id) {
+	//for originating request
+	public Reimbursement(int reimb_id, float reimb_amount, Timestamp reimb_submitted, String reimb_description,
+			int reimb_author, int reimb_status_id, int reimb_type_id) {
 		super();
 		this.reimb_id = reimb_id;
 		this.reimb_amount = reimb_amount;
 		this.reimb_submitted = reimb_submitted;
 		this.reimb_description = reimb_description;
 		this.reimb_author = reimb_author;
-		this.reimb_resolver = reimb_resolver;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
 	}
 
-	public Reimbursement(int reimb_id, float reimb_amount, String reimb_submitted, String reimb_description,
+	public Reimbursement(int reimb_id, float reimb_amount, Timestamp reimb_submitted, String reimb_description,
 			FileInputStream reimb_receipt, int reimb_author, int reimb_resolver, int reimb_status_id,
 			int reimb_type_id) {
 		super();
@@ -69,7 +70,7 @@ public class Reimbursement {
 		this.reimb_type_id = reimb_type_id;
 	}
 
-	public Reimbursement(float reimb_amount, String reimb_submitted, String reimb_resolved, String reimb_description,
+	public Reimbursement(float reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved, String reimb_description,
 			FileInputStream reimb_receipt, int reimb_author, int reimb_resolver, int reimb_status_id,
 			int reimb_type_id) {
 		super();
@@ -83,7 +84,7 @@ public class Reimbursement {
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
 	}
-	public Reimbursement(float reimb_amount, String reimb_submitted, String reimb_resolved, String reimb_description,
+	public Reimbursement(float reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved, String reimb_description,
 			FileInputStream reimb_receipt, int reimb_author, int reimb_status_id,
 			int reimb_type_id) {
 		super();
@@ -113,19 +114,19 @@ public class Reimbursement {
 		this.reimb_amount = reimb_amount;
 	}
 
-	public String getReimb_submitted() {
+	public Timestamp getReimb_submitted() {
 		return reimb_submitted;
 	}
 
-	public void setReimb_submitted(String reimb_submitted) {
+	public void setReimb_submitted(Timestamp reimb_submitted) {
 		this.reimb_submitted = reimb_submitted;
 	}
 
-	public String getReimb_resolved() {
+	public Timestamp getReimb_resolved() {
 		return reimb_resolved;
 	}
 
-	public void setReimb_resolved(String reimb_resolved) {
+	public void setReimb_resolved(Timestamp reimb_resolved) {
 		this.reimb_resolved = reimb_resolved;
 	}
 

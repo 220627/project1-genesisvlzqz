@@ -8,7 +8,7 @@ public class Users {
 	private String user_first_name;
 	private String user_last_name;
 	private String user_email;
-	private String user_role_id;
+	private int user_role_id;
 	private UserRoles user_role;
 	public Users() {
 		super();
@@ -17,7 +17,7 @@ public class Users {
 	
 	//with foreign key int
 	public Users(String ers_username, String ers_password, String user_first_name, String user_last_name,
-			String user_email, String user_role_id) {
+			String user_email, int user_role_id) {
 		super();
 		this.ers_username = ers_username;
 		this.ers_password = ers_password;
@@ -39,7 +39,7 @@ public class Users {
 	}
 
 	public Users(int ers_users_id, String ers_username, String ers_password, String user_first_name,
-			String user_last_name, String user_email, String user_role_id, UserRoles user_role) {
+			String user_last_name, String user_email, int user_role_id, UserRoles user_role) {
 		super();
 		this.ers_users_id = ers_users_id;
 		this.ers_username = ers_username;
@@ -100,11 +100,11 @@ public class Users {
 		this.user_email = user_email;
 	}
 
-	public String getUser_role_id() {
+	public int getUser_role_id() {
 		return user_role_id;
 	}
 
-	public void setUser_role_id(String user_role_id) {
+	public void setUser_role_id(int user_role_id) {
 		this.user_role_id = user_role_id;
 	}
 
