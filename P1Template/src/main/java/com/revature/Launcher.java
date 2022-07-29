@@ -3,6 +3,8 @@ package com.revature;
 import java.sql.Timestamp;
 
 import com.revature.controllers.AuthController;
+import com.revature.controllers.ReimbursementController;
+import com.revature.controllers.UsersController;
 import com.revature.daos.ReimbStatusDAO;
 import com.revature.daos.ReimbTypeDAO;
 import com.revature.daos.ReimbursementDAO;
@@ -90,8 +92,16 @@ public class Launcher {
 			).start(3000); 
 	
 		AuthController ac = new AuthController();
+		UsersController uc = new UsersController();
+		ReimbursementController rc = new ReimbursementController();
+		
 		
 		app.post("/login",ac.loginHandler);
+		app.get("/users",uc.getUsersHandler);
+		app.get("/reimbursements", ReimbursementController.getReimbursementsHandler);
+		app.
+		
+		
 	}
 	
 }
