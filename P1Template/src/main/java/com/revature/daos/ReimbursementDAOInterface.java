@@ -11,7 +11,7 @@ public interface ReimbursementDAOInterface {
 	//employees
 	boolean insertReimbursement(Reimbursement reimb);
 	ArrayList<Reimbursement> getReimbursementByUserID(int user_id);
-	
+	ArrayList<Reimbursement> getReimbursementByUserStatus(int user_id, ReimbStatus status);
 	//employees/manager
 	Reimbursement getReimbursementById(int reimb_id);
 	
@@ -19,4 +19,5 @@ public interface ReimbursementDAOInterface {
 	ArrayList<Reimbursement> getReimbursementByStatus(ReimbStatus status);
 	ArrayList<Reimbursement> getAllReimbursement();
 	boolean updateReimbursement(Reimbursement reimb);
+	
 }

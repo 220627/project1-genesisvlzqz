@@ -7,10 +7,12 @@ public class Reimbursement {
 	
 	private int reimb_id;
 	private float reimb_amount;
-	private Timestamp reimb_submitted;
-	private Timestamp reimb_resolved;
+	private transient Timestamp reimb_submitted;
+	private String dateSubmitted;
+	private transient Timestamp reimb_resolved;
+	private String dateResolved;
 	private String reimb_description;
-	private FileInputStream reimb_receipt;
+	private transient FileInputStream reimb_receipt;
 	private int reimb_author;
 	private Users author;
 	private int reimb_resolver;
@@ -40,6 +42,9 @@ public class Reimbursement {
 		this.reimb_resolver = reimb_resolver;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
+		this.setDateSubmitted(reimb_submitted);
+		this.setDateResolved(reimb_resolved);
+		
 	}
 
 	//for originating request
@@ -53,7 +58,10 @@ public class Reimbursement {
 		this.reimb_author = reimb_author;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
+		this.setDateSubmitted(reimb_submitted);
+
 	}
+	
 
 	public Reimbursement(int reimb_id, float reimb_amount, Timestamp reimb_submitted, String reimb_description,
 			FileInputStream reimb_receipt, int reimb_author, int reimb_resolver, int reimb_status_id,
@@ -68,6 +76,7 @@ public class Reimbursement {
 		this.reimb_resolver = reimb_resolver;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
+		this.setDateSubmitted(reimb_submitted);
 	}
 
 	public Reimbursement(float reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved, String reimb_description,
@@ -83,6 +92,8 @@ public class Reimbursement {
 		this.reimb_resolver = reimb_resolver;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
+		this.setDateSubmitted(reimb_submitted);
+		this.setDateResolved(reimb_resolved);
 	}
 	public Reimbursement(float reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved, String reimb_description,
 			FileInputStream reimb_receipt, int reimb_author, int reimb_status_id,
@@ -91,12 +102,34 @@ public class Reimbursement {
 		this.reimb_amount = reimb_amount;
 		this.reimb_submitted = reimb_submitted;
 		this.reimb_resolved = reimb_resolved;
+		this.reimb_resolved = reimb_resolved;
 		this.reimb_description = reimb_description;
 		this.reimb_receipt = reimb_receipt;
 		this.reimb_author = reimb_author;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
+		this.setDateSubmitted(reimb_submitted);
+		this.setDateResolved(reimb_resolved);
 	}
+	//Constructor for creating Reimbursement Requests
+	public Reimbursement(float reimb_amount, String reimb_description,
+			int reimb_author, int reimb_status_id, int reimb_type_id) {
+		super();
+		this.reimb_amount = reimb_amount;
+		this.reimb_submitted = new Timestamp(System.currentTimeMillis());
+		this.dateSubmitted = reimb_submitted.toString();
+		this.reimb_description = reimb_description;
+		this.reimb_author = reimb_author;
+		this.reimb_status_id = reimb_status_id;
+		this.reimb_type_id = reimb_type_id;
+	}
+	public Reimbursement(int reimb_id, int reimb_resolver, int reimb_status_id) {
+		super();
+		this.reimb_id = reimb_id;
+		this.reimb_resolver = reimb_resolver;
+		this.reimb_status_id = reimb_status_id;
+	}
+	
 	//Setters and Getters
 	public int getReimb_id() {
 		return reimb_id;
@@ -120,6 +153,9 @@ public class Reimbursement {
 
 	public void setReimb_submitted(Timestamp reimb_submitted) {
 		this.reimb_submitted = reimb_submitted;
+		if(reimb_submitted!=null) {
+			this.setDateSubmitted(reimb_submitted);
+		}
 	}
 
 	public Timestamp getReimb_resolved() {
@@ -128,6 +164,9 @@ public class Reimbursement {
 
 	public void setReimb_resolved(Timestamp reimb_resolved) {
 		this.reimb_resolved = reimb_resolved;
+		if(reimb_resolved!=null) {
+			this.setDateResolved(reimb_resolved);
+		}
 	}
 
 	public String getReimb_description() {
@@ -209,16 +248,43 @@ public class Reimbursement {
 	public void setType(ReimbType type) {
 		this.type = type;
 	}
+	
+	public String getDateSubmitted() {
+		return dateSubmitted;
+	}
 
-	//to string
+	public void setDateSubmitted(Timestamp dateSubmitted) {
+		if(dateSubmitted!=null) {
+			this.dateSubmitted = dateSubmitted.toString();
+		}
+		
+	}
+
+	public String getDateResolved() {
+		return dateResolved;
+	}
+
+	public void setDateResolved(Timestamp dateResolved) {
+		if(dateResolved!=null) {
+					this.dateResolved = dateResolved.toString();
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Reimbursement [reimb_id=" + reimb_id + ", reimb_amount=" + reimb_amount + ", reimb_submitted="
-				+ reimb_submitted + ", reimb_resolved=" + reimb_resolved + ", reimb_description=" + reimb_description
-				+ ", reimb_receipt=" + reimb_receipt + ", reimb_author=" + reimb_author + ", author=" + author
-				+ ", reimb_resolver=" + reimb_resolver + ", resolver=" + resolver + ", reimb_status_id="
-				+ reimb_status_id + ", status=" + status + ", reimb_type_id=" + reimb_type_id + ", type=" + type + "]";
+				+ reimb_submitted + ", dateSubmitted=" + dateSubmitted + ", reimb_resolved=" + reimb_resolved
+				+ ", dateResolved=" + dateResolved + ", reimb_description=" + reimb_description + ", reimb_receipt="
+				+ reimb_receipt + ", reimb_author=" + reimb_author + ", author=" + author + ", reimb_resolver="
+				+ reimb_resolver + ", resolver=" + resolver + ", reimb_status_id=" + reimb_status_id + ", status="
+				+ status + ", reimb_type_id=" + reimb_type_id + ", type=" + type + "]";
 	}
+
+
+
+
+
+
 	
 	
 

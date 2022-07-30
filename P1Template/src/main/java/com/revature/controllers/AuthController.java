@@ -25,7 +25,8 @@ public class AuthController {
 		if(user!=null) {
 			ses = ctx.req.getSession();
 			String userJson = gson.toJson(user);
-			ctx.result(userJson);
+			ctx.result("Welcome \n"
+					+ userJson);
 			ctx.status(202);
 		} else {
 			ctx.result("Invalid Credentials");

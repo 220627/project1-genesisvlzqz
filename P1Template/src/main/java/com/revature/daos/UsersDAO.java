@@ -120,4 +120,39 @@ public class UsersDAO implements UsersDAOInterface{
 
 	}
 
+	@Override
+	public Users getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		try (Connection conn = ConnectionUtil.getConnection()){
+			
+			String sql = "select * from ers_users where ers_username =?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				
+				Users user = new Users (
+						rs.getInt("ers_users_id"),
+						rs.getString("ers_username"),
+						rs.getString("ers_password"),
+						rs.getString("user_first_name"),
+						rs.getString("user_last_name"),
+						rs.getString("user_email"),
+						rs.getInt("user_role_id"),
+						null
+						);
+				UserRolesDAO urolesDAO = new UserRolesDAO();
+				int roleId = user.getUser_role_id();
+				user.setUser_role(urolesDAO.getUserRoleById(roleId));
+				return user;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("USER SELECTION FAILED");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

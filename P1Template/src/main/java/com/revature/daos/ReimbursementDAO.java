@@ -28,9 +28,8 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 					+ "reimb_type_id)"
 					+ "values (?,?,?,?,?,?);";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			Timestamp ts = new Timestamp(System.currentTimeMillis());
 			ps.setFloat(1,reimb.getReimb_amount());
-			ps.setTimestamp(2, ts);
+			ps.setTimestamp(2, reimb.getReimb_submitted());
 			ps.setString(3, reimb.getReimb_description());
 			ps.setInt(4, reimb.getReimb_author());
 			ps.setInt(5, reimb.getReimb_status_id());
@@ -308,5 +307,67 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 		}
 		return false;
 	}
+
+	@Override
+	public ArrayList<Reimbursement> getReimbursementByUserStatus(int user_id, ReimbStatus status) {
+		// TODO Auto-generated method stub
+try(Connection conn = ConnectionUtil.getConnection()){
+	
+			ArrayList<Reimbursement> reimbList = new ArrayList<Reimbursement>();
+			
+			String sql = "select * from ers_reimbursement "
+					+ "where reimb_author = ? AND reimb_status_id = ?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, user_id);
+			ps.setInt(2, status.getReimb_status_id());	
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Reimbursement r = new Reimbursement(
+						rs.getInt("reimb_id"),
+						rs.getFloat("reimb_amount"),
+						rs.getTimestamp("reimb_submitted"),
+						rs.getString("reimb_description"),
+						rs.getInt("reimb_author"),
+						rs.getInt("reimb_status_id"),
+						rs.getInt("reimb_type_id")
+						);
+				//Initiating Objects within Reimbursement
+				UsersDAO uDAO = new UsersDAO();
+				ReimbTypeDAO tDAO = new ReimbTypeDAO();
+				ReimbStatusDAO sDAO = new ReimbStatusDAO();
+				r.setAuthor(uDAO.getUserById(r.getReimb_author()));
+				r.setStatus(sDAO.getStatusById(r.getReimb_status_id()));
+				r.setType(tDAO.getTypeById(r.getReimb_type_id()));
+				
+				//Dealing with possible null columns
+				Timestamp resolve = rs.getTimestamp("reimb_resolved");
+				if(rs.wasNull()) {
+					r.setReimb_resolved(null);
+				} else {
+					r.setReimb_resolved(resolve);
+				}
+				
+				int resolver = rs.getInt("reimb_resolver");
+				if(rs.wasNull()) {
+					r.setResolver(null);
+				} else {
+					r.setResolver(uDAO.getUserById(resolver));
+				}
+				//receipt would go here
+				
+				reimbList.add(r);
+			}
+			return reimbList;
+			
+		} catch(SQLException e) {
+			System.out.println("GET REIMBURSEMENT BY STATUS FAILED"); 
+			e.printStackTrace(); 
+		}
+		return null;
+	}
+	
 
 }

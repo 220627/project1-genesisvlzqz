@@ -35,4 +35,30 @@ public class ReimbStatusDAO implements ReimbStatusDAOInterface{
 		return null;
 	}
 
+	@Override
+	public ReimbStatus getStatusByName(String status) {
+		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionUtil.getConnection()){
+			
+			String sql = "select * from ers_reimbursement_status where reimb_status = ?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, status);
+			ResultSet rs = ps.executeQuery(); 
+			
+			while (rs.next()) {
+				ReimbStatus statusObj = new ReimbStatus(
+						rs.getInt("reimb_status_id"),
+						rs.getString("reimb_status")
+						);
+				return statusObj;
+			}
+			
+		} catch(SQLException e) {
+			System.out.println("GET STATUS FAILED");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 }

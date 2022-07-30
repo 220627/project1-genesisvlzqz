@@ -98,10 +98,13 @@ public class Launcher {
 		
 		app.post("/login",ac.loginHandler);
 		app.get("/users",uc.getUsersHandler);
-		app.get("/reimbursements", ReimbursementController.getReimbursementsHandler);
-		app.
-		
-		
+		app.get("/reimbursements", rc.getReimbursementsHandler);
+		app.post("/reimbursement", rc.insertReimbursementHandler);
+		app.put("/reimbursements/update", rc.updateReimbursementsHandler);
+		app.get("/reimbursements/status/{status}", rc.getReimbursementsStatusHandler);
+		app.get("/reimbursements/{username}/{status}", rc.getReimbursementsByIDStatusHandler);
+		app.get("/reimbursements/{username}", rc.getReimbursementsByIDHandler);
+
 	}
 	
 }
