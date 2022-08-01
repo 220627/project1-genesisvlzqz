@@ -42,7 +42,7 @@ public class ReimbursementController {
 			Reimbursement reimb = gson.fromJson(body, Reimbursement.class);
 			reimb.setReimb_submitted(new Timestamp(System.currentTimeMillis()));
 			if(rDAO.insertReimbursement(reimb)) {
-				ctx.status(200).result("Reimbursement for $" + reimb.getReimb_amount() +" has been requested.");
+				ctx.status(202).result("Reimbursement for $" + reimb.getReimb_amount() +" has been requested.");
 			} else {
 				ctx.status(406);
 			}

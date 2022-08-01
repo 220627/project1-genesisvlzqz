@@ -100,6 +100,7 @@ public class Launcher {
 		
 		app.post("/login",ac.loginHandler);
 		app.get("/users",uc.getUsersHandler);
+		app.get("/user/{username}", uc.getUserInfoHandler);
 		app.get("/reimbursements", rc.getReimbursementsHandler);
 		app.post("/reimbursement", rc.insertReimbursementHandler);
 		app.put("/reimbursements/update", rc.updateReimbursementsHandler);

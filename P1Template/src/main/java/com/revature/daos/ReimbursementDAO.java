@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.logging.LogManager;
 
 import com.revature.models.ReimbStatus;
 import com.revature.models.Reimbursement;
@@ -14,6 +15,7 @@ import com.revature.utils.ConnectionUtil;
 
 public class ReimbursementDAO implements ReimbursementDAOInterface {
 
+	static java.util.logging.Logger log = LogManager.getLogManager().getLogger("");
 	@Override
 	public boolean insertReimbursement(Reimbursement reimb) {
 		// TODO Auto-generated method stub
@@ -36,10 +38,12 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 			ps.setInt(6, reimb.getReimb_type_id());
 
 			ps.executeUpdate();
+			log.info("Created Reimbursement");
 			System.out.println("Reimbursement for " + reimb.getReimb_amount() + " has been requested..");
 			return true;
 			
 		} catch(SQLException e) {
+			log.info("Failed to create Reimbursement");
 			System.out.println("INSERT REIMBURSEMENT FAILED"); 
 			e.printStackTrace(); 
 		}
@@ -83,6 +87,7 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 					r.setReimb_resolved(null);
 				} else {
 					r.setReimb_resolved(resolve);
+					r.setResolver(uDAO.getUserById(r.getReimb_resolver()));
 				}
 				
 				int resolver = rs.getInt("reimb_resolver");
@@ -91,12 +96,15 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 				} else {
 					r.setResolver(uDAO.getUserById(resolver));
 				}
-				//receipt would go here
 				
+				//receipt would go here
+			
 				reimbList.add(r);
 			}
+			log.info("User accessed Reimbursements");
 			return reimbList;
 		} catch(SQLException e) {
+			log.info("User failed accessed Reimbursements");
 			System.out.println("GET REIMBURSEMENT BY USER FAILED"); 
 			e.printStackTrace(); 
 		}
@@ -267,9 +275,11 @@ public class ReimbursementDAO implements ReimbursementDAOInterface {
 				
 				reimbList.add(r);
 			}
+			log.info("Acessed All Reimbursement");
 			return reimbList;
 			
 		} catch(SQLException e) {
+			log.info("Failed Acess All Reimbursement");
 			System.out.println("GET ALL REIMBURSEMENT FAILED"); 
 			e.printStackTrace(); 
 		}

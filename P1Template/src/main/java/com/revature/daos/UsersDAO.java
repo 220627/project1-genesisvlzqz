@@ -142,6 +142,7 @@ public class UsersDAO implements UsersDAOInterface{
 						rs.getInt("user_role_id"),
 						null
 						);
+				user.setErs_password("**");
 				UserRolesDAO urolesDAO = new UserRolesDAO();
 				int roleId = user.getUser_role_id();
 				user.setUser_role(urolesDAO.getUserRoleById(roleId));
